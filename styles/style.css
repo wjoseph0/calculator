@@ -32,7 +32,7 @@ body {
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
 }
 
-#keypad button {
+button {
   height: 100%;
   width: 100%;
   font-size: 30px;
@@ -40,4 +40,16 @@ body {
   border-radius: 10px;
   border: none;
   background-color: black;
+}
+
+button:hover {
+  background-color: rgb(10, 10, 10);
+}
+
+.operation {
+  color: rgb(0, 209, 209);
+}
+
+#clear-button {
+  color: rgb(212, 0, 0);
 }
