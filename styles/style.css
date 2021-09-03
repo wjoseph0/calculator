@@ -17,9 +17,22 @@ body {
   grid-template-rows: 1fr 2fr;
 }
 
-#display {
+#display-container {
   background-color: inherit;
   border-radius: inherit;
+  padding: 30px;
+  display: flex;
+  justify-content: right;
+  align-items: flex-end;
+}
+
+#num-display {
+  color: white;
+  background-color: inherit;
+  height: 70px;
+  width: 300px;
+  font-size: 50px;
+  text-align: right;
 }
 
 #keypad {
