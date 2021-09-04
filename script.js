@@ -21,20 +21,27 @@ function evaluateExpression() {
   let expArr = expStr.split(" ");
 
   if (expArr[1] === "÷" && (expArr[0] === "0" || expArr[2] === "0")) {
-    return "You're dumb"
+    return "Can't divide by zero"
   }
   
   return operate(expArr[1], parseInt(expArr[0]), parseInt(expArr[2]));
 }
 
 
-function checkOperation() {
+function checkForOperation() {
+  const display = document.querySelector("#num-display");
   let displayStr = display.textContent;
-  let displayArr = displayStr.split(" ");
+  let displayArr = displayStr.split(/[ ]+/).filter(Boolean);
+  console.log(displayArr);
+  let searchForOperation = () => {
+    if (displayArr.includes("÷")) return true;
+    if (displayArr.includes("×")) return true;
+    if (displayArr.includes("–")) return true;
+    if (displayArr.includes("+")) return true;
+    return false;
+  }
 
-   return displayArr.some(operation => {
-      operation === "÷" || operation === "–" || operation === "×" || operation === "+";
-    });
+  return searchForOperation();
 }
 
 
@@ -44,6 +51,7 @@ function updateDisplay() {
   const operButtons = document.querySelectorAll(".operation");
   const clearButton = document.querySelector("#clear-button");
   const equalButton = document.querySelector("#equal-button");
+  
 
   numButtons.forEach(numButton => {
     numButton.addEventListener("click", () => {
@@ -52,24 +60,35 @@ function updateDisplay() {
   });
 
 
-    operButtons.forEach(operButton => {
+  operButtons.forEach(operButton => {
+    operButton.addEventListener("click", () => {
+      let displayStr = display.textContent;
+      let displayArr = displayStr.split(/[ ]+/).filter(Boolean);
+      if (checkForOperation() === true) {
+        if (displayArr.length === 3 && displayArr[2] !== "" && displayArr[0] !== "") {
+          console.log(displayArr.length);
+          display.textContent = `${evaluateExpression()} ${operButton.textContent} `;
+        }
+      }
 
-      
-
-      operButton.addEventListener("click", () => {
-
-        // while (checkOperation === false) {
+      else if (checkForOperation() === false && display.textContent !== "") {
         display.textContent += ` ${operButton.textContent} `;
-        // }
-      });
+      }
     });
+  });
+    
 
   clearButton.addEventListener("click", () => {
     display.textContent = "";
   });
 
+
   equalButton.addEventListener("click", () => {
-    display.textContent = evaluateExpression();
+    let displayStr = display.textContent;
+    let displayArr = displayStr.split(/[ ]+/).filter(Boolean);
+    console.log(displayArr);
+
+    if (displayArr.length === 3) display.textContent = evaluateExpression();
   });
 
 }
